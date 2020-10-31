@@ -25,7 +25,7 @@ public class MostRunsCSV {
         public String hs;
 
         @CsvBindByName(column = "Avg")
-        public String avg;
+        public double avg;
 
         @CsvBindByName(column = "BF")
         public int bf;
@@ -46,9 +46,7 @@ public class MostRunsCSV {
         public int num6s;
 
         public double getAverage() {
-            if (avg.equals("-"))
-                return 0.0;
-            return Double.parseDouble(avg);
+            return avg;
         }
 
         @Override
