@@ -1,6 +1,7 @@
 package com.bl.iplanalyser;
 
 import com.bl.csvbuilder.CSVException;
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,12 +12,25 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenLoaded_returnCorrectRecords() {
         try {
-            IPLAnalyserService censusAnalyser = new IPLAnalyserService();
-            int numOfRecords = censusAnalyser.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            int numOfRecords = iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             Assert.assertEquals(101, numOfRecords);
         } catch (CSVException e) {
             e.printStackTrace();
         }
     }
 
+    //UC1
+    @Test
+    public void givenMostRunCsvFile_whenSortedByAvg_shouldReturnTopAvg() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByAvg = iplAnalyserService.getAvgWiseSortedRunsData();
+            MostRunsCSV[] mostRunsCSVSCSV = new Gson().fromJson(sortedMostRunByAvg, MostRunsCSV[].class);
+            Assert.assertEquals(83.2, mostRunsCSVSCSV[0].getAverage(), 0.0);
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
