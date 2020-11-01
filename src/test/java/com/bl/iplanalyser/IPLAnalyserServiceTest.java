@@ -192,4 +192,17 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+    //UC12 the Bowlers who took maximum wickets with best bowling averages
+    @Test
+    public void givenMostWicketsCsvFile_whenSortedByNumWicketsWithAvg_shouldReturnTopBowler() {
+        try {
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            String sortedMostWicketsDataByNumWicketsWithAvg = iplAnalyserService.getNumWicketsAndAvgWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByNumWicketsWithAvg, MostWicketsCSV[].class);
+            Assert.assertEquals("Imran Tahir", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
