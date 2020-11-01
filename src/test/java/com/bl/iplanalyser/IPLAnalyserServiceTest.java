@@ -3,6 +3,7 @@ package com.bl.iplanalyser;
 import com.bl.csvbuilder.CSVException;
 import com.google.gson.Gson;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -11,10 +12,15 @@ public class IPLAnalyserServiceTest {
     private final static String MOST_RUNS_CSV_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private final static String MOST_WKTS_CSV_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostWkts.csv";
 
+    private IPLAnalyserService iplAnalyserService = null;
+
+    @Before
+    public void initializeVariables() throws Exception {
+        iplAnalyserService = new IPLAnalyserService();
+    }
     @Test
     public void givenMostRunCsvFile_whenLoaded_returnCorrectRecords() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             int numOfRecords = iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             Assert.assertEquals(101, numOfRecords);
         } catch (CSVException e) {
@@ -26,7 +32,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByAvg_shouldReturnTopAvg() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByAvg = iplAnalyserService.getAvgWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByAvg, MostRunsCSV[].class);
@@ -40,7 +45,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByStrikingRate_shouldReturnTopStrikingRate() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByStrikingRate = iplAnalyserService.getStrikingRateWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByStrikingRate, MostRunsCSV[].class);
@@ -54,7 +58,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedBySix_shouldReturnTopBatsman() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByNumOfSix = iplAnalyserService.getSixWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfSix, MostRunsCSV[].class);
@@ -67,7 +70,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByFour_shouldReturnTopBatsman() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByNumOfFour = iplAnalyserService.getFourWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfFour, MostRunsCSV[].class);
@@ -81,7 +83,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByFourSixSR_shouldReturnTopBatsman() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             List<MostRunsCSV> sortedMostRunByFourSixSr = iplAnalyserService.getFourSixSRWiseSortedRunsData();
             Assert.assertEquals("Andre Russell", sortedMostRunByFourSixSr.get(0).getPlayer());
@@ -94,7 +95,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByAvgAndSR_shouldReturnTopBatsman() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByAvgSr = iplAnalyserService.getAvgSrWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByAvgSr, MostRunsCSV[].class);
@@ -108,7 +108,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostRunCsvFile_whenSortedByRunsAndAvg_shouldReturnTopBatsman() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByRunsWithAvg = iplAnalyserService.getRunsAndAvgWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByRunsWithAvg, MostRunsCSV[].class);
@@ -122,7 +121,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostWicketsCsvFile_whenLoaded_returnCorrectRecords() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             int numOfRecords = iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             Assert.assertEquals(99, numOfRecords);
         } catch (CSVException e) {
@@ -134,10 +132,8 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostWktsCsvFile_whenSortedByBowlingAvg_shouldReturnTopBowler() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             String sortedMostWicketsByBowlingAvg = iplAnalyserService.getBowlingAvgWiseSortedBowlingData();
-            System.out.println(sortedMostWicketsByBowlingAvg);
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsByBowlingAvg, MostWicketsCSV[].class);
             Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].getPlayer());
         } catch (CSVException e) {
@@ -149,7 +145,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostWktsCsvFile_whenSortedByBowlingStrikingRate_shouldReturnTopBowler() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             String sortedMostWicketsDataByBowlingSR = iplAnalyserService.getBowlingSRWiseSortedBowlingData();
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByBowlingSR, MostWicketsCSV[].class);
@@ -163,7 +158,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostWktsCsvFile_whenSortedByEconomyRate_shouldReturnTopBowler() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             String sortedMostWicketsDataByBowlingER = iplAnalyserService.getBowlingERWiseSortedBowlingData();
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByBowlingER, MostWicketsCSV[].class);
@@ -177,7 +171,6 @@ public class IPLAnalyserServiceTest {
     @Test
     public void givenMostWktsCsvFile_whenSortedByBestSRWith5WAnd4W_shouldReturnTopBowler() {
         try {
-            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             String sortedMostWicketsDataBySRWith5WAnd4W = iplAnalyserService.getSRWith5WAnd4WWiseSortedBowlingData();
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataBySRWith5WAnd4W, MostWicketsCSV[].class);
@@ -186,4 +179,6 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+
 }
