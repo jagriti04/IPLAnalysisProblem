@@ -93,7 +93,7 @@ public class IPLAnalyserService {
                 .map(runsData -> runsData.sr)
                 .max(Double::compare).get();
 
-        List<MostRunsCSV> maxStrikeRateList = maxSixFoursList.stream().filter(i -> i.sr == MaxStrikeRate)
+        List<MostRunsCSV> maxStrikeRateList = maxSixFoursList.stream().filter(runsData -> runsData.sr == MaxStrikeRate)
                 .collect(Collectors.toList());
 
         return maxStrikeRateList;
@@ -196,8 +196,8 @@ public class IPLAnalyserService {
         Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getAvg).reversed();
         mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
 
-        for (MostRunsCSV battingData: mostRunsCSVList) {
-            for (MostWicketsCSV bowlingData: mostWicketsCSVList) {
+        for (MostRunsCSV battingData : mostRunsCSVList) {
+            for (MostWicketsCSV bowlingData : mostWicketsCSVList) {
                 if (battingData.getPlayer().equals(bowlingData.getPlayer())) {
                     battingBowlingSortedList.add(battingData.getPlayer());
                 }
@@ -218,8 +218,8 @@ public class IPLAnalyserService {
         Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getWkts).reversed();
         mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
 
-        for (MostRunsCSV battingData: mostRunsCSVList) {
-            for (MostWicketsCSV bowlingData: mostWicketsCSVList) {
+        for (MostRunsCSV battingData : mostRunsCSVList) {
+            for (MostWicketsCSV bowlingData : mostWicketsCSVList) {
                 if (battingData.getPlayer().equals(bowlingData.getPlayer())) {
                     runsWicketsWiseSortedList.add(battingData.getPlayer());
                 }
@@ -235,6 +235,19 @@ public class IPLAnalyserService {
                 .thenComparing(MostRunsCSV::getAverage)
                 .reversed();
         mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
+        String sortedByAvgSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
+        return sortedByAvgSRRunsDataJson;
+    }
+
+    // players with zero hundreds and fifty but best average
+    public String getBatsmanWithZeroHundredFiftyAndMaxAvg() throws CSVException {
+        checkIfRunsListEmpty();
+        List<MostRunsCSV> zeroHundredFiftyList = mostRunsCSVList.stream()
+                .filter(runsData -> runsData.getNum100() == 0 && runsData.getNum50() == 0)
+                .collect(Collectors.toList());
+        Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getAverage)
+                .reversed();
+        mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, zeroHundredFiftyList);
         String sortedByAvgSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
         return sortedByAvgSRRunsDataJson;
     }
