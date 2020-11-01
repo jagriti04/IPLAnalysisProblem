@@ -84,6 +84,17 @@ public class IPLAnalyserService {
         return maxStrikeRateList;
     }
 
+    public String getAvgSrWiseSortedRunsData() throws CSVException {
+        checkIfListEmpty();
+        Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getAverage)
+                                                        .thenComparing(MostRunsCSV::getSr)
+                                                        .reversed();
+        mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
+        String sortedByAvgSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
+        System.out.println(sortedByAvgSRRunsDataJson);
+        return sortedByAvgSRRunsDataJson;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
