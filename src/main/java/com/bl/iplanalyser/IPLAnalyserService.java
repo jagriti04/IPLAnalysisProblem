@@ -228,6 +228,17 @@ public class IPLAnalyserService {
         return runsWicketsWiseSortedList;
     }
 
+    // number of hundreds and batting average sorting
+    public String getNumHundredsAndAvgWiseSortedRunsData() throws CSVException {
+        checkIfRunsListEmpty();
+        Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getNum100)
+                .thenComparing(MostRunsCSV::getAverage)
+                .reversed();
+        mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
+        String sortedByAvgSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
+        return sortedByAvgSRRunsDataJson;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
@@ -244,4 +255,5 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
+
 }
