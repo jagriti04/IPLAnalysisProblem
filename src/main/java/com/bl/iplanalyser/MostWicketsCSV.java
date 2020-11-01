@@ -28,13 +28,13 @@ public class MostWicketsCSV {
     public int bbi;
 
     @CsvBindByName(column = "Avg")
-    public String avg;
+    public Double avg;
 
     @CsvBindByName(column = "Econ")
     public double econ;
 
     @CsvBindByName(column = "SR")
-    public String sr;
+    public Double sr;
 
     @CsvBindByName(column = "4w")
     public int num4w;
@@ -74,7 +74,7 @@ public class MostWicketsCSV {
         return bbi;
     }
 
-    public String getAvg() {
+    public Double getAvg() {
         return avg;
     }
 
@@ -82,7 +82,7 @@ public class MostWicketsCSV {
         return econ;
     }
 
-    public String getSr() {
+    public Double getSr() {
         return sr;
     }
 
