@@ -19,6 +19,7 @@ public class IPLAnalyserServiceTest {
     public void initializeVariables() throws Exception {
         iplAnalyserService = new IPLAnalyserService();
     }
+
     @Test
     public void givenMostRunCsvFile_whenLoaded_returnCorrectRecords() {
         try {
@@ -227,7 +228,20 @@ public class IPLAnalyserServiceTest {
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
             List<String> sortedMostWicketsDataByRunsAndWickets = iplAnalyserService.getRunsAndWicketsWiseSortedBowlingData();
-            Assert.assertEquals("Andre Russell",sortedMostWicketsDataByRunsAndWickets.get(0));
+            Assert.assertEquals("Andre Russell", sortedMostWicketsDataByRunsAndWickets.get(0));
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //UC15 Cricketers who hit maximum hundreds and had best batting averages
+    @Test
+    public void givenMostRunsData_whenSortedByNumHundredsAndBattinAvg_shouldReturnTopBatsman() {
+        try {
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByHundredsAndAvg = iplAnalyserService.getNumHundredsAndAvgWiseSortedRunsData();
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByHundredsAndAvg, MostRunsCSV[].class);
+            Assert.assertEquals("David Warner", mostRunsCSV[0].getPlayer());
         } catch (CSVException e) {
             e.printStackTrace();
         }
