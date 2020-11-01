@@ -138,10 +138,22 @@ public class IPLAnalyserService {
         String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
         return sortedBySRBowlingDataJson;
     }
+
     // bowlers economy rate sorting
     public String getBowlingERWiseSortedBowlingData() throws CSVException {
         checkIfWicketsListEmpty();
         Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getEcon)
+                .reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+        String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
+        return sortedBySRBowlingDataJson;
+    }
+
+    // bowlers Striking rate with 5W and 4W sorting
+    public String getSRWith5WAnd4WWiseSortedBowlingData() throws CSVException {
+        checkIfWicketsListEmpty();
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getSr)
+                .thenComparing(MostWicketsCSV::getNum5w)
                 .reversed();
         mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
         String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
@@ -164,5 +176,4 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
-
 }
