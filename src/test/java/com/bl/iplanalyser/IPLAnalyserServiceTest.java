@@ -9,7 +9,7 @@ import java.util.List;
 
 public class IPLAnalyserServiceTest {
     private final static String MOST_RUNS_CSV_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
-    private final static String MOST_WKTS_CSV_FILE_PATH = ".src/test/resources/IPL2019FactsheetMostWkts.csv";
+    private final static String MOST_WKTS_CSV_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostWkts.csv";
 
     @Test
     public void givenMostRunCsvFile_whenLoaded_returnCorrectRecords() {
@@ -113,6 +113,18 @@ public class IPLAnalyserServiceTest {
             String sortedMostRunByRunsWithAvg = iplAnalyserService.getRunsAndAvgWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByRunsWithAvg, MostRunsCSV[].class);
             Assert.assertEquals("David Warner", mostRunsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //check load wkts file
+    @Test
+    public void givenMostWicketsCsvFile_whenLoaded_returnCorrectRecords() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            int numOfRecords = iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            Assert.assertEquals(101, numOfRecords);
         } catch (CSVException e) {
             e.printStackTrace();
         }

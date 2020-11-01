@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 public class IPLAnalyserService {
     List<MostRunsCSV> mostRunsCSVList = null;
+    List<MostWicketsCSV> mostWicketsCSVList = null;
 
     public void printWelcomeMsg() {
         System.out.println("Welcome to IPL Analyser system.");
@@ -32,7 +33,18 @@ public class IPLAnalyserService {
             throw new CSVException(e.getMessage(), CSVException.ExceptionType.WRONG_CSV_FILE);
         }
     }
-
+    public int loadMostWicketsData(String csvFilePath) throws CSVException {
+        try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
+            ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+            mostWicketsCSVList = csvBuilder.getCSVFileList(reader, MostWicketsCSV.class);
+            return mostWicketsCSVList.size();
+        } catch (IOException e) {
+            throw new CSVException(e.getMessage(),
+                    CSVException.ExceptionType.CSV_FILE_PROBLEM);
+        } catch (RuntimeException e) {
+            throw new CSVException(e.getMessage(), CSVException.ExceptionType.WRONG_CSV_FILE);
+        }
+    }
     public String getAvgWiseSortedRunsData() throws CSVException {
         checkIfListEmpty();
         Comparator<MostRunsCSV> runDataComparator = Comparator.comparing(MostRunsCSV::getAverage).reversed();
@@ -115,4 +127,5 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
+
 }
