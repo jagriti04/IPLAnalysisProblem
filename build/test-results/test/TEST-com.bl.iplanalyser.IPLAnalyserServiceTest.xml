@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.bl.iplanalyser.IPLAnalyserServiceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-11-01T19:19:23" hostname="jagriti-Lenovo-ideapad-300-15ISK" time="2.032">
+<testsuite name="com.bl.iplanalyser.IPLAnalyserServiceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-11-01T19:31:19" hostname="jagriti-Lenovo-ideapad-300-15ISK" time="1.985">
   <properties/>
-  <testcase name="givenMostWicketsCsvFile_whenLoaded_returnCorrectRecords" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.514"/>
-  <testcase name="givenMostRunCsvFile_whenLoaded_returnCorrectRecords" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.22"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByStrikingRate_shouldReturnTopStrikingRate" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.218"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByFourSixSR_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.15"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByRunsAndAvg_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.209"/>
-  <testcase name="givenMostRunCsvFile_whenSortedBySix_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.209"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByAvgAndSR_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.184"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByFour_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.183"/>
-  <testcase name="givenMostRunCsvFile_whenSortedByAvg_shouldReturnTopAvg" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.136"/>
+  <testcase name="givenMostWicketsCsvFile_whenLoaded_returnCorrectRecords" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.577"/>
+  <testcase name="givenMostRunCsvFile_whenLoaded_returnCorrectRecords" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.179"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByStrikingRate_shouldReturnTopStrikingRate" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.245"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByFourSixSR_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.177"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByRunsAndAvg_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.165"/>
+  <testcase name="givenMostRunCsvFile_whenSortedBySix_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.153"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByAvgAndSR_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.185"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByFour_shouldReturnTopBatsman" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.14"/>
+  <testcase name="givenMostRunCsvFile_whenSortedByAvg_shouldReturnTopAvg" classname="com.bl.iplanalyser.IPLAnalyserServiceTest" time="0.159"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

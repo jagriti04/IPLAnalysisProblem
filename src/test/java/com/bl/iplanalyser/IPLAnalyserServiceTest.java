@@ -124,9 +124,12 @@ public class IPLAnalyserServiceTest {
         try {
             IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             int numOfRecords = iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
-            Assert.assertEquals(101, numOfRecords);
+            Assert.assertEquals(99, numOfRecords);
         } catch (CSVException e) {
             e.printStackTrace();
         }
     }
+
+    //UC7 top bowling averages of the Cricketers
+
 }
