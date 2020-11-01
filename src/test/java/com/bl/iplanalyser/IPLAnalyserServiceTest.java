@@ -83,8 +83,22 @@ public class IPLAnalyserServiceTest {
         try {
             IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
-            List<MostRunsCSV> sortedMostRunByNumOfFour = iplAnalyserService.getFourSixSRWiseSortedRunsData();
-            Assert.assertEquals("Andre Russell", sortedMostRunByNumOfFour.get(0).getPlayer());
+            List<MostRunsCSV> sortedMostRunByFourSixSr = iplAnalyserService.getFourSixSRWiseSortedRunsData();
+            Assert.assertEquals("Andre Russell", sortedMostRunByFourSixSr.get(0).getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //UC5
+    @Test
+    public void givenMostRunCsvFile_whenSortedByAvgAndSR_shouldReturnTopBatsman() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByAvgSr = iplAnalyserService.getAvgSrWiseSortedRunsData();
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByAvgSr, MostRunsCSV[].class);
+            Assert.assertEquals("MS Dhoni", mostRunsCSV[0].getPlayer());
         } catch (CSVException e) {
             e.printStackTrace();
         }
