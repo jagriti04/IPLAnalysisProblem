@@ -206,6 +206,28 @@ public class IPLAnalyserService {
         return battingBowlingSortedList;
     }
 
+    //number runs and wickets sorting
+    public List<String> getRunsAndWicketsWiseSortedBowlingData() throws CSVException {
+        checkIfRunsListEmpty();
+        checkIfWicketsListEmpty();
+
+        List<String> runsWicketsWiseSortedList = new ArrayList<>();
+        Comparator<MostRunsCSV> battingCSVComparator = Comparator.comparing(MostRunsCSV::getRuns).reversed();
+        mostRunsCSVList = this.descendingOrderSort(battingCSVComparator, mostRunsCSVList);
+
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getWkts).reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+
+        for (MostRunsCSV battingData: mostRunsCSVList) {
+            for (MostWicketsCSV bowlingData: mostWicketsCSVList) {
+                if (battingData.getPlayer().equals(bowlingData.getPlayer())) {
+                    runsWicketsWiseSortedList.add(battingData.getPlayer());
+                }
+            }
+        }
+        return runsWicketsWiseSortedList;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
@@ -222,5 +244,4 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
-
 }
