@@ -219,4 +219,17 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+    //UC14 Cricketers who are the best all rounders that means the most runs and wickets
+    @Test
+    public void givenMostWicketsCsvFile_whenSortedByRunsAndWickets_shouldReturnTopBowler() {
+        try {
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            List<String> sortedMostWicketsDataByRunsAndWickets = iplAnalyserService.getRunsAndWicketsWiseSortedBowlingData();
+            Assert.assertEquals("Andre Russell",sortedMostWicketsDataByRunsAndWickets.get(0));
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
