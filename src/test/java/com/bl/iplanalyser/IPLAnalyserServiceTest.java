@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class IPLAnalyserServiceTest {
     private final static String MOST_RUNS_CSV_FILE_PATH = "./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private final static String MOST_WKTS_CSV_FILE_PATH = ".src/test/resources/IPL2019FactsheetMostWkts.csv";
@@ -70,6 +72,19 @@ public class IPLAnalyserServiceTest {
             String sortedMostRunByNumOfFour = iplAnalyserService.getFourWiseSortedRunsData();
             MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByNumOfFour, MostRunsCSV[].class);
             Assert.assertEquals("Shikhar Dhawan", mostRunsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //UC4
+    @Test
+    public void givenMostRunCsvFile_whenSortedByFourSixSR_shouldReturnTopBatsman() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            List<MostRunsCSV> sortedMostRunByNumOfFour = iplAnalyserService.getFourSixSRWiseSortedRunsData();
+            Assert.assertEquals("Andre Russell", sortedMostRunByNumOfFour.get(0).getPlayer());
         } catch (CSVException e) {
             e.printStackTrace();
         }
