@@ -33,6 +33,7 @@ public class IPLAnalyserService {
             throw new CSVException(e.getMessage(), CSVException.ExceptionType.WRONG_CSV_FILE);
         }
     }
+
     public int loadMostWicketsData(String csvFilePath) throws CSVException {
         try (Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
             ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
@@ -45,6 +46,7 @@ public class IPLAnalyserService {
             throw new CSVException(e.getMessage(), CSVException.ExceptionType.WRONG_CSV_FILE);
         }
     }
+
     public String getAvgWiseSortedRunsData() throws CSVException {
         checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runDataComparator = Comparator.comparing(MostRunsCSV::getAverage).reversed();
@@ -136,6 +138,16 @@ public class IPLAnalyserService {
         String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
         return sortedBySRBowlingDataJson;
     }
+    // bowlers economy rate sorting
+    public String getBowlingERWiseSortedBowlingData() throws CSVException {
+        checkIfWicketsListEmpty();
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getEcon)
+                .reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+        String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
+        return sortedBySRBowlingDataJson;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
@@ -152,6 +164,5 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
-
 
 }
