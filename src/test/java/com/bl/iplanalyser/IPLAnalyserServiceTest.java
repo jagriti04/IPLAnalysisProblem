@@ -150,13 +150,25 @@ public class IPLAnalyserServiceTest {
         try {
             IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
-            String sortedMostWicketsByBowlingSR = iplAnalyserService.getBowlingSRWiseSortedBowlingData();
-            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsByBowlingSR, MostWicketsCSV[].class);
+            String sortedMostWicketsDataByBowlingSR = iplAnalyserService.getBowlingSRWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByBowlingSR, MostWicketsCSV[].class);
             Assert.assertEquals("Alzarri Joseph", mostWicketsCSV[0].getPlayer());
         } catch (CSVException e) {
             e.printStackTrace();
         }
     }
 
-
+    //UC9 the Bowlers who had the best economy rate
+    @Test
+    public void givenMostWktsCsvFile_whenSortedByEconomyRate_shouldReturnTopBowler() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            String sortedMostWicketsDataByBowlingER = iplAnalyserService.getBowlingERWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByBowlingER, MostWicketsCSV[].class);
+            Assert.assertEquals("Ben Cutting", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
