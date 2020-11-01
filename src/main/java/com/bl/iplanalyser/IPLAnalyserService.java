@@ -128,7 +128,7 @@ public class IPLAnalyserService {
     }
 
     // bowlers striking rate sorting
-    public String getBowlingAvgSRWiseSortedBowlingData() throws CSVException {
+    public String getBowlingSRWiseSortedBowlingData() throws CSVException {
         checkIfWicketsListEmpty();
         Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getSr)
                 .reversed();

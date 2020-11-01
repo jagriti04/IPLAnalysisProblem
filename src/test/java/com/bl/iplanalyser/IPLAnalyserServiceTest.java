@@ -150,11 +150,13 @@ public class IPLAnalyserServiceTest {
         try {
             IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
-            String sortedMostWicketsByBowlingSR = iplAnalyserService.getBowlingAvgSRWiseSortedBowlingData();
+            String sortedMostWicketsByBowlingSR = iplAnalyserService.getBowlingSRWiseSortedBowlingData();
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsByBowlingSR, MostWicketsCSV[].class);
             Assert.assertEquals("Alzarri Joseph", mostWicketsCSV[0].getPlayer());
         } catch (CSVException e) {
             e.printStackTrace();
         }
     }
+
+
 }
