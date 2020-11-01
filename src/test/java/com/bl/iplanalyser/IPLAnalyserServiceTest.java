@@ -103,4 +103,18 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+    //UC6
+    @Test
+    public void givenMostRunCsvFile_whenSortedByRunsAndAvg_shouldReturnTopBatsman() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByRunsWithAvg = iplAnalyserService.getRunsAndAvgWiseSortedRunsData();
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByRunsWithAvg, MostRunsCSV[].class);
+            Assert.assertEquals("David Warner", mostRunsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
