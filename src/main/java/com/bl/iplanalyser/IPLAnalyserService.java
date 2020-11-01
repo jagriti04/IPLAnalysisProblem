@@ -65,6 +65,25 @@ public class IPLAnalyserService {
         return sortedNumFourRunsDataJson;
     }
 
+    public List<MostRunsCSV> getFourSixSRWiseSortedRunsData() throws CSVException {
+        checkIfListEmpty();
+        int maxNumSixFour = mostRunsCSVList.stream()
+                                .map(runsData -> runsData.num4s + runsData.num6s)
+                                .max(Integer::compare).get();
+        List<MostRunsCSV> maxSixFoursList = mostRunsCSVList.stream()
+                                            .filter(runsData -> runsData.num4s + runsData.num6s == maxNumSixFour)
+                                            .collect(Collectors.toList());
+
+        double MaxStrikeRate = maxSixFoursList.stream()
+                                        .map(runsData -> runsData.sr)
+                                        .max(Double::compare).get();
+
+        List<MostRunsCSV> maxStrikeRateList = maxSixFoursList.stream().filter(i -> i.sr == MaxStrikeRate)
+                .collect(Collectors.toList());
+
+        return maxStrikeRateList;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
