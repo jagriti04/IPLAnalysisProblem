@@ -46,7 +46,7 @@ public class IPLAnalyserService {
         }
     }
     public String getAvgWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runDataComparator = Comparator.comparing(MostRunsCSV::getAverage).reversed();
         mostRunsCSVList = this.descendingOrderSort(runDataComparator, mostRunsCSVList);
         String sortedAvgRunsDataJson = new Gson().toJson(mostRunsCSVList);
@@ -54,7 +54,7 @@ public class IPLAnalyserService {
     }
 
     public String getStrikingRateWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getSr).reversed();
         mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
         String sortedSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
@@ -62,7 +62,7 @@ public class IPLAnalyserService {
     }
 
     public String getSixWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getNum6s).reversed();
         mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
         String sortedNumSixRunsDataJson = new Gson().toJson(mostRunsCSVList);
@@ -70,7 +70,7 @@ public class IPLAnalyserService {
     }
 
     public String getFourWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getNum4s).reversed();
         mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
         String sortedNumFourRunsDataJson = new Gson().toJson(mostRunsCSVList);
@@ -78,7 +78,7 @@ public class IPLAnalyserService {
     }
 
     public List<MostRunsCSV> getFourSixSRWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         int maxNumSixFour = mostRunsCSVList.stream()
                 .map(runsData -> runsData.num4s + runsData.num6s)
                 .max(Integer::compare).get();
@@ -97,7 +97,7 @@ public class IPLAnalyserService {
     }
 
     public String getAvgSrWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getAverage)
                 .thenComparing(MostRunsCSV::getSr)
                 .reversed();
@@ -108,7 +108,7 @@ public class IPLAnalyserService {
 
     //UC6
     public String getRunsAndAvgWiseSortedRunsData() throws CSVException {
-        checkIfListEmpty();
+        checkIfRunsListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getRuns)
                 .thenComparing(MostRunsCSV::getAverage)
                 .reversed();
@@ -117,15 +117,30 @@ public class IPLAnalyserService {
         return sortedByRunsWithAvgRunsDataJson;
     }
 
+    // bowlers avg sorting
+    public String getBowlingAvgWiseSortedBowlingData() throws CSVException {
+        checkIfWicketsListEmpty();
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getAvg)
+                .reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+        String sortedByAvgBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
+        return sortedByAvgBowlingDataJson;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
     }
 
-    private void checkIfListEmpty() throws CSVException {
+    private void checkIfRunsListEmpty() throws CSVException {
         if (mostRunsCSVList == null || mostRunsCSVList.size() == 0) {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
 
+    private void checkIfWicketsListEmpty() throws CSVException {
+        if (mostWicketsCSVList == null || mostWicketsCSVList.size() == 0) {
+            throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
+        }
+    }
 }

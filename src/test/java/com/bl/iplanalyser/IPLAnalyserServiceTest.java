@@ -131,5 +131,16 @@ public class IPLAnalyserServiceTest {
     }
 
     //UC7 top bowling averages of the Cricketers
-
+    @Test
+    public void givenMostWktsCsvFile_whenSortedByBowlingAvg_shouldReturnTopBowler() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            String sortedMostWicketsByBowlingAvg = iplAnalyserService.getBowlingAvgWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsByBowlingAvg, MostWicketsCSV[].class);
+            Assert.assertEquals("Prasidh Krishna", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
