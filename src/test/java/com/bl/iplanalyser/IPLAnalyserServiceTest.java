@@ -2,6 +2,7 @@ package com.bl.iplanalyser;
 
 import com.bl.csvbuilder.CSVException;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.builder.ToStringExclude;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -201,6 +202,19 @@ public class IPLAnalyserServiceTest {
             String sortedMostWicketsDataByNumWicketsWithAvg = iplAnalyserService.getNumWicketsAndAvgWiseSortedBowlingData();
             MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByNumWicketsWithAvg, MostWicketsCSV[].class);
             Assert.assertEquals("Imran Tahir", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //UC13 Cricketers who had the best Batting and Bowling averages
+    @Test
+    public void givenRunsAndWicketsData_whenSortedByBattingBowlingAvg_shouldReturnTopPlayer() {
+        try {
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            List<String> sortedDataByBattingBowlingAvg = iplAnalyserService.getBattingBowlingAvgWiseSortedData();
+            Assert.assertEquals("Andre Russell", sortedDataByBattingBowlingAvg.get(0));
         } catch (CSVException e) {
             e.printStackTrace();
         }
