@@ -180,5 +180,16 @@ public class IPLAnalyserServiceTest {
         }
     }
 
-
+    //UC11 Cricketers who had great bowling averages with the best striking rates
+    @Test
+    public void givenMostWicketsCsvFile_whenSortedByBestBowlingAvgWithSR_shouldReturnTopBowler() {
+        try {
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            String sortedMostWicketsDataByAvgWithSR = iplAnalyserService.getAvgWithSRWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsDataByAvgWithSR, MostWicketsCSV[].class);
+            Assert.assertEquals("Krishnappa Gowtham", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
