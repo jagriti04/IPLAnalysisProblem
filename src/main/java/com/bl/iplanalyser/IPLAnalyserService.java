@@ -154,6 +154,7 @@ public class IPLAnalyserService {
         checkIfWicketsListEmpty();
         Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getSr)
                 .thenComparing(MostWicketsCSV::getNum5w)
+                .thenComparing(MostWicketsCSV::getNum4w)
                 .reversed();
         mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
         String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
