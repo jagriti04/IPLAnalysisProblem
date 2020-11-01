@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -181,6 +182,28 @@ public class IPLAnalyserService {
         mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
         String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
         return sortedBySRBowlingDataJson;
+    }
+
+    //Batting and bowling average sorting
+    public List<String> getBattingBowlingAvgWiseSortedData() throws CSVException {
+        checkIfRunsListEmpty();
+        checkIfWicketsListEmpty();
+
+        List<String> battingBowlingSortedList = new ArrayList<>();
+        Comparator<MostRunsCSV> battingCSVComparator = Comparator.comparing(MostRunsCSV::getAverage).reversed();
+        mostRunsCSVList = this.descendingOrderSort(battingCSVComparator, mostRunsCSVList);
+
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getAvg).reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+
+        for (MostRunsCSV battingData: mostRunsCSVList) {
+            for (MostWicketsCSV bowlingData: mostWicketsCSVList) {
+                if (battingData.getPlayer().equals(bowlingData.getPlayer())) {
+                    battingBowlingSortedList.add(battingData.getPlayer());
+                }
+            }
+        }
+        return battingBowlingSortedList;
     }
 
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
