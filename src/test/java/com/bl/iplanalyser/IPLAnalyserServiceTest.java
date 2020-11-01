@@ -246,4 +246,17 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+    //UC16 Cricketers who hit zero 100s and 50s but had best batting averages
+    @Test
+    public void givenMostRunsData_whenZeroNumHundredsFiftyAndMaxBattinAvg_shouldReturnCorrectBatsman() {
+        try {
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByHundredsFiftyAndAvg = iplAnalyserService.getBatsmanWithZeroHundredFiftyAndMaxAvg();
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByHundredsFiftyAndAvg, MostRunsCSV[].class);
+            Assert.assertEquals("Marcus Stoinis", mostRunsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
