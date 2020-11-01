@@ -143,4 +143,18 @@ public class IPLAnalyserServiceTest {
             e.printStackTrace();
         }
     }
+
+    //UC8 top Striking Rates of the Bowlers
+    @Test
+    public void givenMostWktsCsvFile_whenSortedByBowlingStrikingRate_shouldReturnTopBowler() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostWicketsData(MOST_WKTS_CSV_FILE_PATH);
+            String sortedMostWicketsByBowlingSR = iplAnalyserService.getBowlingAvgSRWiseSortedBowlingData();
+            MostWicketsCSV[] mostWicketsCSV = new Gson().fromJson(sortedMostWicketsByBowlingSR, MostWicketsCSV[].class);
+            Assert.assertEquals("Alzarri Joseph", mostWicketsCSV[0].getPlayer());
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
 }
