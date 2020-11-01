@@ -172,6 +172,17 @@ public class IPLAnalyserService {
         return sortedBySRBowlingDataJson;
     }
 
+    //Bowling number of wickets and bowling average sorting
+    public String getNumWicketsAndAvgWiseSortedBowlingData() throws CSVException {
+        checkIfWicketsListEmpty();
+        Comparator<MostWicketsCSV> bowlingCSVComparator = Comparator.comparing(MostWicketsCSV::getWkts)
+                .thenComparing(MostWicketsCSV::getAvg)
+                .reversed();
+        mostWicketsCSVList = this.descendingOrderSort(bowlingCSVComparator, mostWicketsCSVList);
+        String sortedBySRBowlingDataJson = new Gson().toJson(mostWicketsCSVList);
+        return sortedBySRBowlingDataJson;
+    }
+
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
         List<E> reverseSorted = list.stream().sorted(comparator).collect(Collectors.toList());
         return reverseSorted;
