@@ -68,15 +68,15 @@ public class IPLAnalyserService {
     public List<MostRunsCSV> getFourSixSRWiseSortedRunsData() throws CSVException {
         checkIfListEmpty();
         int maxNumSixFour = mostRunsCSVList.stream()
-                                .map(runsData -> runsData.num4s + runsData.num6s)
-                                .max(Integer::compare).get();
+                .map(runsData -> runsData.num4s + runsData.num6s)
+                .max(Integer::compare).get();
         List<MostRunsCSV> maxSixFoursList = mostRunsCSVList.stream()
-                                            .filter(runsData -> runsData.num4s + runsData.num6s == maxNumSixFour)
-                                            .collect(Collectors.toList());
+                .filter(runsData -> runsData.num4s + runsData.num6s == maxNumSixFour)
+                .collect(Collectors.toList());
 
         double MaxStrikeRate = maxSixFoursList.stream()
-                                        .map(runsData -> runsData.sr)
-                                        .max(Double::compare).get();
+                .map(runsData -> runsData.sr)
+                .max(Double::compare).get();
 
         List<MostRunsCSV> maxStrikeRateList = maxSixFoursList.stream().filter(i -> i.sr == MaxStrikeRate)
                 .collect(Collectors.toList());
@@ -87,12 +87,22 @@ public class IPLAnalyserService {
     public String getAvgSrWiseSortedRunsData() throws CSVException {
         checkIfListEmpty();
         Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getAverage)
-                                                        .thenComparing(MostRunsCSV::getSr)
-                                                        .reversed();
+                .thenComparing(MostRunsCSV::getSr)
+                .reversed();
         mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
         String sortedByAvgSRRunsDataJson = new Gson().toJson(mostRunsCSVList);
-        System.out.println(sortedByAvgSRRunsDataJson);
         return sortedByAvgSRRunsDataJson;
+    }
+
+    //UC6
+    public String getRunsAndAvgWiseSortedRunsData() throws CSVException {
+        checkIfListEmpty();
+        Comparator<MostRunsCSV> runsCSVComparator = Comparator.comparing(MostRunsCSV::getRuns)
+                .thenComparing(MostRunsCSV::getAverage)
+                .reversed();
+        mostRunsCSVList = this.descendingOrderSort(runsCSVComparator, mostRunsCSVList);
+        String sortedByRunsWithAvgRunsDataJson = new Gson().toJson(mostRunsCSVList);
+        return sortedByRunsWithAvgRunsDataJson;
     }
 
     private <E> List<E> descendingOrderSort(Comparator<E> comparator, List<E> list) {
@@ -105,5 +115,4 @@ public class IPLAnalyserService {
             throw new CSVException("No Runs Data", CSVException.ExceptionType.NO_CSV_DATA);
         }
     }
-
 }
