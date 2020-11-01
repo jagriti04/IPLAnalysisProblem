@@ -27,8 +27,22 @@ public class IPLAnalyserServiceTest {
             IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
             iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
             String sortedMostRunByAvg = iplAnalyserService.getAvgWiseSortedRunsData();
-            MostRunsCSV[] mostRunsCSVSCSV = new Gson().fromJson(sortedMostRunByAvg, MostRunsCSV[].class);
-            Assert.assertEquals(83.2, mostRunsCSVSCSV[0].getAverage(), 0.0);
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByAvg, MostRunsCSV[].class);
+            Assert.assertEquals(83.2, mostRunsCSV[0].getAverage(), 0.0);
+        } catch (CSVException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // UC3 to top striking rate batting
+    @Test
+    public void givenMostRunCsvFile_whenSortedByStrikingRate_shouldReturnTopStrikingRate() {
+        try {
+            IPLAnalyserService iplAnalyserService = new IPLAnalyserService();
+            iplAnalyserService.loadMostRunsData(MOST_RUNS_CSV_FILE_PATH);
+            String sortedMostRunByStrikingRate = iplAnalyserService.getStrikingRateWiseSortedRunsData();
+            MostRunsCSV[] mostRunsCSV = new Gson().fromJson(sortedMostRunByStrikingRate, MostRunsCSV[].class);
+            Assert.assertEquals(333.33, mostRunsCSV[0].getSr(), 0.0);
         } catch (CSVException e) {
             e.printStackTrace();
         }
